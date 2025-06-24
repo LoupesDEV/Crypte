@@ -2,13 +2,13 @@ body {
   margin: 0;
   padding: 0;
   background-color: #1e1e2f;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
   color: #f4f4f4;
 }
 
 .container {
   padding: 16px;
-  width: 260px;
+  width: 280px;
 }
 
 h2 {
@@ -58,14 +58,32 @@ hr {
 }
 
 #list {
-  max-height: 150px;
+  max-height: 200px;
   overflow-y: auto;
 }
 
-#list div {
-  padding: 6px;
-  margin-bottom: 4px;
+.entry {
   background: #2b2b40;
-  border-radius: 4px;
+  border-radius: 6px;
+  padding: 8px;
+  margin-bottom: 8px;
   font-size: 14px;
+}
+
+.reveal-btn,
+.copy-btn,
+.delete-btn,
+.edit-btn {
+  margin-left: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #c2113a;
+  font-size: 14px;
+}
+.reveal-btn:hover,
+.copy-btn:hover,
+.delete-btn:hover,
+.edit-btn:hover {
+  color: #ff4060;
 }

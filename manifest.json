@@ -2,14 +2,10 @@
   "manifest_version": 2,
   "name": "Crypte",
   "version": "1.0",
-  "description": "Gestionnaire de mots de passe ultra-léger avec popup automatique.",
-  "permissions": [
-    "storage",
-    "tabs",
-    "<all_urls>"
-  ],
+  "description": "Gestionnaire de mots de passe sécurisé avec verrouillage automatique.",
+  "permissions": ["storage", "tabs", "<all_urls>"] ,
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["crypto.js", "background.js"]
   },
   "content_scripts": [
     {
@@ -18,11 +14,12 @@
     }
   ],
   "browser_action": {
-    "default_popup": "popup/popup.html",
+    "default_popup": "lock.html",
     "default_icon": {
       "16": "icon.png"
     }
   },
+  "web_accessible_resources": ["popup/popup.html"],
   "icons": {
     "16": "icon.png",
     "32": "icon.png"
