@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="medias/README/header.png">
+    <img src="assets/banner.png">
 </div>
 
 <h1 align="center">CRYPTE</h1>
