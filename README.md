@@ -32,8 +32,9 @@ Crypte est construit avec une stack simple, locale et sans service externe :
 - **Python 3** : langage principal de l'application
 - **Tkinter / ttk** : interface graphique desktop
 - **cryptography (Fernet)** : chiffrement symetrique des entrees
+- **argon2-cffi (Argon2id)** : derivation de cle depuis le master password
 - **JSON** : serialisation des donnees par entree
-- **SHA-256 + Base64 URL-safe** : derivation de cle depuis le master password
+- **Sel aleatoire (16 bytes) + Base64 URL-safe** : cle compatible Fernet
 
 ## Prerequis & compatibilite
 
@@ -49,6 +50,7 @@ Le fichier `requirements.txt` contient :
 
 ```txt
 cryptography>=42.0.0
+argon2-cffi>=23.1.0
 ```
 
 ## Installation
@@ -92,11 +94,15 @@ Tu as 3 facons de lancer l'application :
 ./run.sh
 ```
 
+Ce script installe automatiquement les dependances de `requirements.txt` avant le lancement.
+
 - **Script batch (Windows)**
 
 ```bat
 run.bat
 ```
+
+Ce script installe automatiquement les dependances de `requirements.txt` avant le lancement.
 
 - **Execution directe Python**
 
@@ -174,12 +180,13 @@ Crypte/
 ### Ce que le projet fait bien
 
 - Chiffrement local des donnees avec Fernet
+- Derivation de cle avec Argon2id (KDF moderne)
+- Sel aleatoire stocke en tete de fichier (`vault/crypte.dat`)
 - Aucune base distante ni API externe
 - Donnees chargees uniquement si le master password est correct
 
 ### Limites actuelles
 
-- Derivation de cle basee sur SHA-256 simple (sans sel ni KDF avance type PBKDF2/Argon2)
 - Pas de rotation de cle
 - Pas de verrouillage automatique apres inactivite
 - Pas d'historique/versionning des entrees
@@ -188,7 +195,7 @@ Crypte/
 
 - [ ] Tri des entrees (A-Z, date de creation, etc.)
 - [ ] Export/import chiffre
-- [ ] KDF renforce (PBKDF2 ou Argon2)
+- [ ] Migration de parametres Argon2id (time/memory cost) configurable
 
 ## FAQ
 
