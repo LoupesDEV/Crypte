@@ -30,6 +30,8 @@ class Crypte:
         self.passwords_data = []
         self.show_passwords = False
         self.search_var = tk.StringVar()
+        self.site_sort_modes = ["added_desc", "added_asc", "alpha_asc", "alpha_desc"]
+        self.site_sort_index = -1
 
         apply_styles()
         self.setup_ui()
@@ -98,7 +100,7 @@ class Crypte:
         table_wrap.pack(fill="both", expand=True, padx=20, pady=(0, 20))
 
         self.tree = ttk.Treeview(table_wrap, columns=("site", "user", "password", "note"), show="headings")
-        self.tree.heading("site", text="SITE")
+        self.tree.heading("site", text="SITE", command=self.cycle_site_sort)
         self.tree.heading("user", text="NOM D'UTILISATEUR")
         self.tree.heading("password", text="MOT DE PASSE")
         self.tree.heading("note", text="NOTE")
@@ -116,6 +118,28 @@ class Crypte:
         self.tree.tag_configure("even", background="#202633")
 
         self.tree.bind("<Double-1>", self.open_edit_popup)
+        self.update_site_heading()
+
+    def current_site_sort_mode(self):
+        if self.site_sort_index < 0:
+            return None
+        return self.site_sort_modes[self.site_sort_index]
+
+    def update_site_heading(self):
+        mode = self.current_site_sort_mode()
+        labels = {
+            None: "SITE | Date Descendante",
+            "added_desc": "SITE | Date Descendante",
+            "added_asc": "SITE | Date Ascendante",
+            "alpha_asc": "SITE | A-Z",
+            "alpha_desc": "SITE | Z-A",
+        }
+        self.tree.heading("site", text=labels.get(mode, "SITE"), command=self.cycle_site_sort)
+
+    def cycle_site_sort(self):
+        self.site_sort_index = (self.site_sort_index + 1) % len(self.site_sort_modes)
+        self.update_site_heading()
+        self.refresh_tree()
 
     def load_passwords(self):
         self.passwords_data = load_encrypted_entries(self.file_path, self.key)
@@ -127,15 +151,31 @@ class Crypte:
 
         query = self.search_var.get().strip().lower()
         visible_count = 0
+        visible_indices = []
 
         for idx, data in enumerate(self.passwords_data):
             site = data.get("site", "")
             if query and query not in site.lower():
                 continue
 
+            visible_indices.append(idx)
+
+        mode = self.current_site_sort_mode()
+        if mode == "added_desc":
+            visible_indices.sort(reverse=True)
+        elif mode == "added_asc":
+            visible_indices.sort()
+        elif mode == "alpha_asc":
+            visible_indices.sort(key=lambda i: (self.passwords_data[i].get("site", "").lower(), i))
+        elif mode == "alpha_desc":
+            visible_indices.sort(key=lambda i: (self.passwords_data[i].get("site", "").lower(), i), reverse=True)
+
+        for idx in visible_indices:
+            data = self.passwords_data[idx]
             user = data.get("user", "")
             password = data.get("password", "")
             note_preview = data.get("note", "")
+            site = data.get("site", "")
             password_display = password if self.show_passwords else ("•" * 8)
             row_tag = "even" if visible_count % 2 else "odd"
 
