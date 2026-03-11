@@ -128,7 +128,7 @@ class Crypte:
     def update_site_heading(self):
         mode = self.current_site_sort_mode()
         labels = {
-            None: "SITE | Date Descendante",
+            None: "SITE | Date Ascendante",
             "added_desc": "SITE | Date Descendante",
             "added_asc": "SITE | Date Ascendante",
             "alpha_asc": "SITE | A-Z",
