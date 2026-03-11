@@ -214,3 +214,18 @@ Par securite visuelle. Utilise le bouton `Reveal/Hide mdp` pour basculer l'affic
 ### Comment contribuer ?
 
 Tu peux ouvrir une issue ou proposer une pull request sur le depot GitHub.
+
+# Contributeurs
+
+Merci aux personnes et ressources ayant contribué au projet:
+
+- [LoupesDEV](https://github.com/LoupesDEV) — Développement principal, conception et maintenance.
+
+Vous souhaitez contribuer ? Consultez le [guide de contribution](CONTRIBUTING.md) ou ouvrez une *issue* pour proposer
+des améliorations.
+
+<p align="center">
+    <img alt="Footer" src="https://i.imgur.com/fnZRNIn.png">
+    <br><br>
+    <img src="https://ziadoua.github.io/m3-Markdown-Badges/badges/LicenceGPLv3/licencegplv33.svg">
+</p>
