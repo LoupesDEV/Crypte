@@ -69,7 +69,6 @@ class Crypte:
         sidebar.pack_propagate(False)
 
         tk.Label(sidebar, text="CRYPTE", font=("Segoe UI", 28, "bold"), bg=BG_PANEL, fg=ACCENT).pack(anchor="w", padx=20, pady=(26, 8))
-        tk.Label(sidebar, text="Gestion sécurisée", font=("Segoe UI", 10), bg=BG_PANEL, fg=TEXT_MUTED).pack(anchor="w", padx=20, pady=(0, 24))
 
         ttk.Button(sidebar, text="+ Ajouter", command=self.w_add, style="Sidebar.TButton").pack(fill="x", padx=12, pady=4)
         ttk.Button(sidebar, text="- Supprimer", command=self.delete, style="Sidebar.TButton").pack(fill="x", padx=12, pady=4)
@@ -176,7 +175,8 @@ class Crypte:
             password = data.get("password", "")
             note_preview = data.get("note", "")
             site = data.get("site", "")
-            password_display = password if self.show_passwords else ("•" * 8)
+            # Visibility is managed per entry via `show_passwords`.
+            password_display = password if data.get("show_passwords", False) else ("•" * 8)
             row_tag = "even" if visible_count % 2 else "odd"
 
             self.tree.insert("", tk.END, iid=str(idx), values=(site, user, password_display, note_preview), tags=(row_tag,))
@@ -197,7 +197,9 @@ class Crypte:
         self.copy_to_clipboard(value, label)
 
     def toggle_password_visibility(self):
-        self.show_passwords = not self.show_passwords
+        idx = self.get_selected_index()
+        if idx is None: return
+        self.passwords_data[idx]["show_passwords"] = not self.passwords_data[idx].get("show_passwords", False)
         self.refresh_tree()
 
     def save_all_passwords(self):
@@ -315,6 +317,7 @@ class Crypte:
                 "user": e_user.get(),
                 "password": e_pwd.get(),
                 "note": t_note.get("1.0", tk.END).strip(),
+                "show_passwords": data.get("show_passwords", False),
             }
             self.save_all_passwords()
             self.load_passwords()
