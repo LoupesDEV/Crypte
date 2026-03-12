@@ -68,7 +68,7 @@ class Crypte:
         sidebar.pack(side="left", fill="y")
         sidebar.pack_propagate(False)
 
-        tk.Label(sidebar, text="CRYPTE", font=("Segoe UI", 28, "bold"), bg=BG_PANEL, fg=ACCENT).pack(anchor="w", padx=20, pady=(26, 8))
+        tk.Label(sidebar, text="CRYPTE", font=("Segoe UI", 28, "bold"), bg=BG_PANEL, fg=ACCENT).pack(side="top", fill="x", padx=20, pady=(26, 8))
 
         ttk.Button(sidebar, text="+ Ajouter", command=self.w_add, style="Sidebar.TButton").pack(fill="x", padx=12, pady=4)
         ttk.Button(sidebar, text="- Supprimer", command=self.delete, style="Sidebar.TButton").pack(fill="x", padx=12, pady=4)
